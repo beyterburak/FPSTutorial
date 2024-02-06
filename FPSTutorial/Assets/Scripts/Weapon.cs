@@ -5,8 +5,6 @@ using UnityEngine;
 
 public class Weapon : MonoBehaviour
 {
-    public Camera playerCamera;
-
     //Shooting
     [SerializeField] private bool isShooting, readyToShoot;
     [SerializeField] private bool allowReset = true;
@@ -73,7 +71,7 @@ public class Weapon : MonoBehaviour
         bullet.transform.forward = shootingDirection;
 
         //Shoot the bullet
-        bullet.GetComponent<Rigidbody>().AddForce(bulletSpawn.forward.normalized * bulletVelocity, ForceMode.Impulse);
+        bullet.GetComponent<Rigidbody>().AddForce(shootingDirection * bulletVelocity, ForceMode.Impulse);
 
         //Destroy the bullet after some time
         StartCoroutine(DestroyBulletAfterTime(bullet, bulletPrefabLifeTime));
@@ -102,7 +100,7 @@ public class Weapon : MonoBehaviour
     public Vector3 CalculateDirectionAndSpread()
     {
         //Shooting from the middle of the screen to check where are we pointing at
-        Ray ray = playerCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
+        Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
         RaycastHit hit;
 
         Vector3 targetPoint;
