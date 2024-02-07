@@ -33,6 +33,14 @@ public class Weapon : MonoBehaviour
     [SerializeField] private int magazineSize, bulletsLeft;
     [SerializeField] private bool isReloading;
 
+    public enum WeaponModel
+    {
+        M1911,
+        M4
+    }
+
+    public WeaponModel thisWeaponModel;
+
     public enum ShootingMode
     {
         Single,
@@ -69,7 +77,7 @@ public class Weapon : MonoBehaviour
             isShooting = Input.GetKeyDown(KeyCode.Mouse0);
         }
 
-        if (Input.GetKeyDown(KeyCode.R) && bulletsLeft < magazineSize && isReloading == false)
+        if (Input.GetKeyDown(KeyCode.R) && bulletsLeft < magazineSize && isReloading == false && isShooting == false)
         {
             Reload();
         }
@@ -99,7 +107,9 @@ public class Weapon : MonoBehaviour
         muzzleEffect.GetComponent<ParticleSystem>().Play();
         animator.SetTrigger("RECOIL");
 
-        SoundManager.instance.shootingSoundM1911.Play();
+        //SoundManager.instance.shootingSoundM1911.Play();
+        
+        SoundManager.instance.PlayShootingSound(thisWeaponModel);
 
         readyToShoot = false;
 
@@ -134,10 +144,12 @@ public class Weapon : MonoBehaviour
 
     private void Reload()
     {
-        SoundManager.instance.reloadingSoundM1911.Play();
+        //SoundManager.instance.reloadingSoundM1911.Play();
+        SoundManager.instance.PlayReloadSound(thisWeaponModel);
         animator.SetTrigger("RELOAD");
 
         isReloading = true;
+        readyToShoot = false;
         Invoke("ReloadComleted", reloadTime);
     }
 
@@ -145,6 +157,7 @@ public class Weapon : MonoBehaviour
     {
         bulletsLeft = magazineSize;
         isReloading = false;
+        readyToShoot = true;    
     }
 
     private void ResetShot()
