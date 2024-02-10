@@ -15,7 +15,7 @@ public class Weapon : MonoBehaviour
     [SerializeField] private float shootingDelay = 2f;
 
     //Burst
-    [SerializeField] private int bulletsPerBurst = 3;
+    public int bulletsPerBurst = 3;
     [SerializeField] private int burstBulletsLeft;
 
     //Spread
@@ -32,7 +32,7 @@ public class Weapon : MonoBehaviour
 
     //Loading
     [SerializeField] private float reloadTime;
-    [SerializeField] private int magazineSize, bulletsLeft;
+    public int magazineSize, bulletsLeft;
     [SerializeField] private bool isReloading;
 
     public Vector3 spawnPosition;
@@ -86,7 +86,7 @@ public class Weapon : MonoBehaviour
                 isShooting = Input.GetKeyDown(KeyCode.Mouse0);
             }
 
-            if (Input.GetKeyDown(KeyCode.R) && bulletsLeft < magazineSize && isReloading == false && isShooting == false)
+            if (Input.GetKeyDown(KeyCode.R) && bulletsLeft < magazineSize && isReloading == false && isShooting == false && WeaponManager.instance.CheckAmmoLeftFor(thisWeaponModel) > 0)
             {
                 Reload();
             }
@@ -102,13 +102,10 @@ public class Weapon : MonoBehaviour
                 burstBulletsLeft = bulletsPerBurst;
                 FireWeapon();
             }
-
-            if (AmmoManager.instance.ammoDisplay != null)
-            {
-                AmmoManager.instance.ammoDisplay.text = $"{bulletsLeft / bulletsPerBurst}/{magazineSize / bulletsPerBurst}";
-            }
         }
     }
+
+    
 
     private void FireWeapon()
     {
@@ -165,7 +162,18 @@ public class Weapon : MonoBehaviour
 
     private void ReloadComleted()
     {
-        bulletsLeft = magazineSize;
+        if (WeaponManager.instance.CheckAmmoLeftFor(thisWeaponModel) > magazineSize)
+        {
+            bulletsLeft = magazineSize;
+            WeaponManager.instance.DecreaseTotalAmmo(bulletsLeft, thisWeaponModel);
+        }
+        else
+        {
+            bulletsLeft = WeaponManager.instance.CheckAmmoLeftFor(thisWeaponModel);
+            WeaponManager.instance.DecreaseTotalAmmo(bulletsLeft, thisWeaponModel);
+        }
+
+        
         isReloading = false;
         readyToShoot = true;    
     }

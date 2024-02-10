@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7597805365829159682}
   - component: {fileID: 137155231615394984}
   - component: {fileID: 3749046005095600419}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Trigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -98,7 +98,7 @@ GameObject:
   - component: {fileID: 4051226914732165663}
   - component: {fileID: 5947796130194409772}
   - component: {fileID: 6449378721020157744}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: M4_8
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -281,7 +281,7 @@ GameObject:
   - component: {fileID: 951468488331291098}
   - component: {fileID: 6734935587876510456}
   - component: {fileID: 5423255133553282372}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: MuzzleFlashEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5064,7 +5064,7 @@ GameObject:
   - component: {fileID: 2089458411995001760}
   - component: {fileID: 6058112046340890160}
   - component: {fileID: 8523404175445438314}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Sight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5147,7 +5147,7 @@ GameObject:
   - component: {fileID: 2245118965693496837}
   - component: {fileID: 8567901380749175370}
   - component: {fileID: 7154302708554104082}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Bolt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5230,7 +5230,7 @@ GameObject:
   - component: {fileID: 5694903859143945213}
   - component: {fileID: 7443815202217640457}
   - component: {fileID: 5203752229173539500}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Mag
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5311,7 +5311,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3978294606277798161}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: BulletSpawn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5345,7 +5345,7 @@ GameObject:
   - component: {fileID: 9034189365485838857}
   - component: {fileID: 5812116036464142135}
   - component: {fileID: 4615267341247950419}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Rear_Sight
   m_TagString: Untagged
   m_Icon: {fileID: 0}

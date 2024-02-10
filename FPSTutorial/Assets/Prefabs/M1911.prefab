@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3142943416404129503}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: BulletSpawn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 171596279516825912}
   - component: {fileID: 5679683195879457604}
   - component: {fileID: 3478762057867914320}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Magazin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -128,7 +128,7 @@ GameObject:
   - component: {fileID: 4139830511272584329}
   - component: {fileID: 7334446334872725214}
   - component: {fileID: 7447908240690077842}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: M1911
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -256,7 +256,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6824128910560069605}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CINEMA_4D_Editor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -289,7 +289,7 @@ GameObject:
   - component: {fileID: 2390620889757867495}
   - component: {fileID: 110658269767277700}
   - component: {fileID: 7250176803183263346}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: M1911
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -376,7 +376,7 @@ GameObject:
   - component: {fileID: 2682378217437966320}
   - component: {fileID: 6431401718122645081}
   - component: {fileID: 5232871634183200458}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: MuzzleFlashEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5159,7 +5159,7 @@ GameObject:
   - component: {fileID: 5924431632522905940}
   - component: {fileID: 688188876181943582}
   - component: {fileID: 1374120606271944566}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Slide
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5242,7 +5242,7 @@ GameObject:
   - component: {fileID: 2462298729333689618}
   - component: {fileID: 6007928125693515922}
   - component: {fileID: 8421793779202950977}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Trigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5325,7 +5325,7 @@ GameObject:
   - component: {fileID: 6818067362311414251}
   - component: {fileID: 6693459742476013251}
   - component: {fileID: 3980398077114550019}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Hammer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
