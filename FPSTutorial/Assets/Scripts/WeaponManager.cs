@@ -140,14 +140,14 @@ public class WeaponManager : MonoBehaviour
         }
     }
 
-    public int CheckAmmoLeftFor(WeaponModel thisWeaponModel)
+    public int CheckAmmoLeftFor(Weapon.WeaponModel thisWeaponModel)
     {
         switch (thisWeaponModel)
         {
-            case WeaponModel.M1911:
+            case Weapon.WeaponModel.M1911:
                 return totalPistolAmmo;
 
-            case WeaponModel.M4:
+            case Weapon.WeaponModel.M4:
                 return totalRifleAmmo;
 
             default:
