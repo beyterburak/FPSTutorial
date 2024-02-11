@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.Burst.CompilerServices;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -9,18 +10,24 @@ public class Weapon : MonoBehaviour
 {
     public bool isActiveWeapon;
 
+    [Header("Shooting")]
     //Shooting
     [SerializeField] private bool isShooting, readyToShoot;
     [SerializeField] private bool allowReset = true;
     [SerializeField] private float shootingDelay = 2f;
 
+    [Header("Burst")]
     //Burst
     public int bulletsPerBurst = 3;
     [SerializeField] private int burstBulletsLeft;
 
+    [Header("Spread")]
     //Spread
     [SerializeField] float spreadIntensity;
+    public float hipSpreadIntensity;
+    public float adsSpreadIntensity;
 
+    [Header("Bullet")]
     //Bullet
     public GameObject bulletPrefab;
     public Transform bulletSpawn;
@@ -30,6 +37,7 @@ public class Weapon : MonoBehaviour
     public GameObject muzzleEffect;
     internal Animator animator;
 
+    [Header("Loading")]
     //Loading
     [SerializeField] private float reloadTime;
     public int magazineSize, bulletsLeft;
@@ -37,6 +45,8 @@ public class Weapon : MonoBehaviour
 
     public Vector3 spawnPosition;
     public Vector3 spawnRotation;
+
+    public bool isADS;
 
     public enum WeaponModel
     {
@@ -62,12 +72,24 @@ public class Weapon : MonoBehaviour
         animator = GetComponent<Animator>();
 
         bulletsLeft = magazineSize;
+
+        spreadIntensity = hipSpreadIntensity;
     }
 
     void Update()
     {
         if (isActiveWeapon)
         {
+            if (Input.GetKeyDown(KeyCode.Mouse1))
+            {
+                EnterADS();
+            }
+
+            if (Input.GetKeyUp(KeyCode.Mouse1))
+            {
+                ExitADS();
+            }
+
             GetComponent<Outline>().enabled = false;
 
             if (bulletsLeft == 0 && isShooting)
@@ -105,16 +127,36 @@ public class Weapon : MonoBehaviour
         }
     }
 
-    
+    private void EnterADS()
+    {
+        animator.SetTrigger("enterADS");
+        isADS = true;
+        HUDManager.instance.middleDot.SetActive(false);
+        spreadIntensity = adsSpreadIntensity;
+    }
+
+    private void ExitADS()
+    {
+        animator.SetTrigger("exitADS");
+        isADS = false;
+        HUDManager.instance.middleDot.SetActive(true);
+        spreadIntensity = hipSpreadIntensity;
+    }
 
     private void FireWeapon()
     {
         bulletsLeft--;
 
         muzzleEffect.GetComponent<ParticleSystem>().Play();
-        animator.SetTrigger("RECOIL");
 
-        //SoundManager.instance.shootingSoundM1911.Play();
+        if (isADS)
+        {
+            animator.SetTrigger("RECOIL_ADS");
+        }
+        else
+        {
+            animator.SetTrigger("RECOIL");
+        }
         
         SoundManager.instance.PlayShootingSound(thisWeaponModel);
 
@@ -188,28 +230,60 @@ public class Weapon : MonoBehaviour
     public Vector3 CalculateDirectionAndSpread()
     {
         //Shooting from the middle of the screen to check where are we pointing at
-        Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
-        RaycastHit hit;
-
-        Vector3 targetPoint;
-        if (Physics.Raycast(ray, out hit))
+        if (thisWeaponModel == WeaponModel.M4)
         {
-            //Hitting Something
-            targetPoint = hit.point;
+            Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
+            RaycastHit hit;
+
+            Vector3 targetPoint;
+            if (Physics.Raycast(ray, out hit))
+            {
+                //Hitting Something
+                targetPoint = hit.point;
+            }
+            else
+            {
+                //Shooting at the air
+                targetPoint = ray.GetPoint(100);
+            }
+            Vector3 direction = targetPoint - bulletSpawn.position;
+
+            float x = UnityEngine.Random.Range(-spreadIntensity, spreadIntensity);
+            float y = UnityEngine.Random.Range(-spreadIntensity, spreadIntensity);
+
+            //Returning the shooting direction and spread
+            return direction + new Vector3(x, y, 0);
         }
+
+        if (thisWeaponModel == WeaponModel.M1911)
+        {
+            Ray ray = Camera.main.ViewportPointToRay(new Vector3(0f, 0.5f, 0));
+            RaycastHit hit;
+
+            Vector3 targetPoint;
+            if (Physics.Raycast(ray, out hit))
+            {
+                //Hitting Something
+                targetPoint = hit.point;
+            }
+            else
+            {
+                //Shooting at the air
+                targetPoint = ray.GetPoint(100);
+            }
+            Vector3 direction = targetPoint - bulletSpawn.position;
+
+            float x = UnityEngine.Random.Range(-spreadIntensity, spreadIntensity);
+            float y = UnityEngine.Random.Range(-spreadIntensity, spreadIntensity);
+
+            //Returning the shooting direction and spread
+            return direction + new Vector3(x, y, 0);
+        }
+
         else
         {
-            //Shooting at the air
-            targetPoint = ray.GetPoint(100);
+            return new Vector3(0, 0, 0);
         }
-
-        Vector3 direction = targetPoint - bulletSpawn.position;
-
-        float x = UnityEngine.Random.Range(-spreadIntensity, spreadIntensity);
-        float y = UnityEngine.Random.Range(-spreadIntensity, spreadIntensity);
-
-        //Returning the shooting direction and spread
-        return direction + new Vector3(x, y, 0);
     }
 
     private IEnumerator DestroyBulletAfterTime(GameObject bullet, float delay)
